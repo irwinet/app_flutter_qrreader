@@ -39,14 +39,14 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: _createButtomNavigationBar(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
-        onPressed: _scanQR,
+        onPressed: () => _scanQR(context),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
-  _scanQR() async{
+  _scanQR(BuildContext context) async{
     //print('Scan QR...');
     // https://www.appwillay.com/
     // geo:-12.1746682,-76.9639777
@@ -57,17 +57,17 @@ class _HomePageState extends State<HomePage> {
       final scan = ScanModel(value: futureString);
       scansBloc.addScan(scan);
 
-      final scan2 = ScanModel(value: 'geo:-12.1746682,-76.9639777');
+      final scan2 = ScanModel(value: 'geo:40.724233047051705,-74.00731459101564');
       //DBProvider.db.newScan(scan);
       scansBloc.addScan(scan2);
 
       if(Platform.isIOS){
         Future.delayed(Duration(milliseconds: 750),(){
-          utils.openURL(scan);
+          utils.openURL(scan, context);
         });
       }
       else{
-        utils.openURL(scan);
+        utils.openURL(scan, context);
       }
     }
 
