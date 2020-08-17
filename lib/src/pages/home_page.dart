@@ -51,15 +51,22 @@ class _HomePageState extends State<HomePage> {
     // https://www.appwillay.com/
     // geo:-12.1746682,-76.9639777
     
-    dynamic futureString = 'https://www.appwillay.com/';
+    //dynamic futureString = 'https://www.appwillay.com/';
+    var futureString;
     
+    try{
+      futureString = await BarcodeScanner.scan();
+    }catch(e){
+      futureString = e.toString();
+    }
+
     if(futureString!=null){
-      final scan = ScanModel(value: futureString);
+      final scan = ScanModel(value: futureString.rawContent);
       scansBloc.addScan(scan);
 
-      final scan2 = ScanModel(value: 'geo:40.724233047051705,-74.00731459101564');
+      //final scan2 = ScanModel(value: 'geo:40.724233047051705,-74.00731459101564');
       //DBProvider.db.newScan(scan);
-      scansBloc.addScan(scan2);
+      //scansBloc.addScan(scan2);
 
       if(Platform.isIOS){
         Future.delayed(Duration(milliseconds: 750),(){
